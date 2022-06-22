@@ -1,0 +1,27 @@
+{
+  "name": "traer-physics",
+  "version": "1.0.0",
+  "description": "TypeScript port of Traer Physics engine",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "dev": "vite serve demos/",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "traer",
+    "typescript",
+    "physics"
+  ],
+  "author": "Vanja Jelic",
+  "license": "MIT",
+  "dependencies": {
+    "p5": "^1.4.0"
+  },
+  "devDependencies": {
+    "vite": "^2.6.14"
+  }
+}
