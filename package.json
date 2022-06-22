@@ -2,10 +2,6 @@
   "name": "traer-physics",
   "version": "1.0.0",
   "description": "TypeScript port of Traer Physics engine",
-  "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "dev": "vite serve demos/",
     "build": "vite build",
