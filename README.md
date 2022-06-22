@@ -9,9 +9,15 @@ A simple particle system physics engine for processing rewritten in TypeScript. 
 3. [Springs](https://github.com/jvanja/traer_ts/blob/main/src/Spring.ts) - they act on two particles
 4. [Attractions](https://github.com/jvanja/traer_ts/blob/main/src/Attraction.ts) - which also act on two particles
 
-## Demos
+## Examples
 
-Coming soon...
+[Simple Pendulum]()
+[Bouncy Balls]()
+[Cloth]()
+[Cloud]()
+[Random Arboretum]()
+[Tendrils]()
+[Box]()
 
 ---
 * Original source for processing is here: [http://murderandcreate.com/physics/](http://murderandcreate.com/physics/)
