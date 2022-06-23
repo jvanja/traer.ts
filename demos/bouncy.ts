@@ -11,11 +11,11 @@ class Bouncy {
   public b: Particle;
   public c: Particle;
   public p5: p5;
-  public cnv: Canvas;
 
   constructor() {
-    this.physics = new ParticleSystem(new Vector3D(0, 0, 0), 0.1);
-    this.mouse = this.physics.makeParticle();
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
 
     this.p5 = new p5(function(s: p5) {
       s.setup = this.setup.bind(this)
@@ -24,16 +24,14 @@ class Bouncy {
   }
 
   setup() {
-    // size(400, 400);
-    this.cnv = this.p5.createCanvas(this.width, this.height);
-    // this.p5.background(200);
-    // framerate(24);
+    this.p5.createCanvas(this.width, this.height);
     this.p5.smooth();
     this.p5.ellipseMode(this.p5.CENTER);
     this.p5.noStroke();
     this.p5.noCursor();
 
-    // physics = new ParticleSystem(0, 0.1);
+    this.physics = new ParticleSystem(new Vector3D(0, 0, 0), 0.1);
+    this.mouse = this.physics.makeParticle();
     this.mouse.makeFixed();
     this.b = this.physics.makeParticle(1.0, new Vector3D(random(0, this.width), random(0, this.height), 0));
     this.c = this.physics.makeParticle(1.0, new Vector3D(random(0, this.width), random(0, this.height), 0));
@@ -54,7 +52,7 @@ class Bouncy {
     this.handleBoundaryCollisions(this.c);
     this.physics.tick();
 
-    this.p5.background(255);
+    this.p5.background('rgb(237,227,205)');
 
     this.p5.fill(255, 0, 0);
     this.p5.ellipse(this.mouse.position.x, this.mouse.position.y, 35, 35);

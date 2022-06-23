@@ -17,10 +17,10 @@ class Random_Arboretum {
   public centroidX: number = 0;
   public centroidY: number = 0;
   public p5: p5;
-  public cnv: Canvas;
 
   constructor() {
-    this.physics = new ParticleSystem(new Vector3D(0, 0, 0), 0.1);
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
 
     this.p5 = new p5(function(s: p5) {
       s.setup = this.setup.bind(this)
@@ -30,12 +30,12 @@ class Random_Arboretum {
 
 
   setup() {
+    this.physics = new ParticleSystem(new Vector3D(0, 0, 0), 0.1);
     // physics = new ParticleSystem(0, 0.1);
-    this.cnv = this.p5.createCanvas(this.width, this.height);
+    this.p5.createCanvas(this.width, this.height);
     this.p5.smooth();
     this.p5.strokeWeight(2);
     this.p5.ellipseMode(this.p5.CENTER);
-
 
     // Runge-Kutta, the default integrator is stable and snappy,
     // but slows down quickly as you add particles.
@@ -43,13 +43,14 @@ class Random_Arboretum {
 
     // Try this to see how Euler is faster, but borderline unstable.
     // 500 particles = 24 fps on my machine
-    //physics.setIntegrator( ParticleSystem.MODIFIED_EULER ); 
+    this.physics.setIntegrator(ParticleSystem.MODIFIED_EULER);
 
     // Now try this to see make it more damped, but stable.
     this.physics.setDrag(0.2);
 
 
-    // textFont(loadFont("AkzidenzGroteskBQ-Regular-14.vlw"));
+    this.p5.mousePressed = () => this.addNode();
+    this.p5.mouseDragged = () => this.addNode();
 
     this.initialize();
   }
@@ -57,7 +58,7 @@ class Random_Arboretum {
   draw() {
     this.physics.tick();
     if (this.physics.numberOfParticles() > 1) this.updateCentroid();
-    this.p5.background(255);
+    this.p5.background('rgb(200,240,100)');
     this.p5.fill(0);
     // this.p5.text("" + this.physics.numberOfParticles() + " PARTICLES\n" + this.p5.frameRate + " FPS", 10, 20);
     this.p5.translate(this.width / 2, this.height / 2);
@@ -73,7 +74,7 @@ class Random_Arboretum {
     this.p5.noStroke();
     for (let i = 0; i < this.physics.numberOfParticles(); ++i) {
       var v = this.physics.getParticle(i);
-      console.log(v.position.x, v.position.y)
+      // console.log(v.position.x, v.position.y)
       this.p5.ellipse(v.position.x, v.position.y, this.NODE_SIZE, this.NODE_SIZE);
     }
 
@@ -90,25 +91,7 @@ class Random_Arboretum {
     this.p5.endShape();
   }
 
-  mousePressed() {
-    this.addNode();
-  }
 
-  mouseDragged() {
-    this.addNode();
-  }
-
-  keyPressed() {
-    if (key == 'c') {
-      this.initialize();
-      return;
-    }
-
-    if (key == ' ') {
-      this.addNode();
-      return;
-    }
-  }
 
   updateCentroid() {
     var xMax = Number.NEGATIVE_INFINITY,

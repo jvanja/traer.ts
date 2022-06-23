@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+#defaultCanvas0 {
+  width: 100% !important;
+  height: 100% !important;
+}
+#infoText {
+  position: absolute;
+  left: 50%;
+  font-size: 30px;
+  transform: translateX(-50%);
+}

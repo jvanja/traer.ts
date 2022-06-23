@@ -10,13 +10,15 @@ class Cloth {
   public width: number = 800;
   public height: number = 600;
   public gridSize: number = 12;
-  public cnv: Canvas;
   public mouseDown: boolean = false;
   public particleMass: number = 0.2;
 
   constructor() {
     this.physics = new ParticleSystem(new Vector3D(0, 2.0, 0), 0.05);
     this.particles = [];
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
 
     this.p5 = new p5(function(s: p5) {
       s.setup = this.setupCanvas.bind(this)
@@ -44,7 +46,6 @@ class Cloth {
 
     this.particles[0][0].makeFixed();
     this.particles[0][this.gridSize - 1].makeFixed();
-
   }
 
   draw() {
@@ -78,16 +79,12 @@ class Cloth {
       this.p5.curveVertex(this.particles[this.gridSize - 1][j].position.x, this.particles[this.gridSize - 1][j].position.y);
       this.p5.endShape()
     }
-    // }
-
-    //   // mouseReleased() {
-    //   //   this.particles[0][this.gridSize - 1].setVelocity((mouseX - pmouseX), (mouseY - pmouseY), 0);
   }
 
   setupCanvas() {
     this.p5.smooth();
     this.p5.fill(0);
-    this.cnv = this.p5.createCanvas(this.width, this.height);
+    this.p5.createCanvas(this.width, this.height);
     this.p5.background(200);
     this.p5.mousePressed = () => this.mouseDown = true
     this.p5.mouseReleased = () => this.mouseDown = false
@@ -96,4 +93,3 @@ class Cloth {
 }
 
 new Cloth()
-

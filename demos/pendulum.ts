@@ -12,11 +12,12 @@ class Pendulum {
   public anchor: Particle;
   public s: Spring;
   public p5: p5;
-  public cnv: Canvas;
-
 
   constructor() {
     this.physics = new ParticleSystem(new Vector3D(0, 1, 0), 0.05);
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
 
     this.p5 = new p5(function(s: p5) {
       s.setup = this.setup.bind(this)
@@ -25,7 +26,7 @@ class Pendulum {
   }
 
   setup() {
-    this.cnv = this.p5.createCanvas(this.width, this.height);
+    this.p5.createCanvas(this.width, this.height);
     this.p5.smooth();
     this.p5.noStroke();
     this.p5.fill(0);
@@ -51,7 +52,7 @@ class Pendulum {
   draw() {
     this.physics.tick();
 
-    this.p5.background(255);
+    this.p5.background('rgb(200,200,100)');
 
     this.p5.line(this.p.position.x, this.p.position.y, this.anchor.position.x, this.anchor.position.y);
     this.p5.ellipse(this.anchor.position.x, this.anchor.position.y, 5, 5);
