@@ -78,5 +78,7 @@ export class Vector3D {
     this.w *= s;
   }
 
+  public set(X: number, Y: number, Z: number) { this.x = X; this.y = Y; this.z = Z; }
+
 }
 
