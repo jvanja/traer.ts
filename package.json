@@ -15,7 +15,6 @@
   "author": "Vanja Jelic",
   "license": "MIT",
   "dependencies": {
-    "p5": "^1.4.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
