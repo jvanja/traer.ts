@@ -1,107 +1,116 @@
 import { Particle } from '../src/Particle';
 import { ParticleSystem } from '../src/ParticleSystem';
 import { Vector3D } from '../src/Vector3D';
+import { Spring } from '../src/Spring';
 //import java.util.Vector;
 
 export class Tendrils {
-  public tendrils: Vector3D;
+  public width: number = 800;
+  public height: number = 600;
+  public tendrils: Array<any>;
   public physics: ParticleSystem;
   public mouse: Particle;
   public greyer: number;
   public drawing: boolean;
   public nothingDrawn: boolean;
+  public p5: p5;
 
   constructor() {
-    //  size(400, 400);
-    //  smooth();
-    //  stroke(0);
-    //  background(255);
-    //  cursor(CROSS);
-
-    this.physics = new ParticleSystem(0.0, 0.05);
-
-    //  mouse = physics.makeParticle();
-    //  mouse.makeFixed();
-
-    //  tendrils = new Vector();
-    //  drawing = false;
-    //  greyer = 255;
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.p5 = new p5(function(s: p5) {
+      s.setup = this.setup.bind(this)
+      s.draw = this.draw.bind(this)
+    }.bind(this))
   }
 
-  //void draw()
-  //{
-  //  mouse.position().set(mouseX, mouseY, 0);
+  setup() {
+    console.log('setup')
+    this.p5.createCanvas(this.width, this.height);
+    this.p5.smooth();
+    this.p5.stroke(0);
+    this.p5.background(255);
+    this.p5.cursor(this.p5.CROSS);
 
-  //  if (!drawing) {
-  //    physics.tick();
-  //    if (greyer < 255)
-  //      greyer *= 1.11111;
-  //    if (greyer > 255)
-  //      greyer = 255;
-  //  }
-  //  else {
-  //    if (greyer >= 64)
-  //      greyer *= 0.9;
-  //  }
+    // this.physics = new ParticleSystem(0, 0.05);
+    this.physics = new ParticleSystem(new Vector3D(0, 0, 0), 0.05);
 
-  //  background(255);
+    this.mouse = this.physics.makeParticle();
+    this.mouse.makeFixed();
 
-  //  drawOldGrey();
-  //}
+    this.tendrils = new Array();
+    this.drawing = false;
 
-  //void drawOldGrey()
-  //{
-  //  stroke(255 - greyer);
-  //  for (int i = 0; i < tendrils.size() - 1; ++i )
-  //  {
-  //    T3ndril t = (T3ndril)tendrils.get(i);
-  //    drawElastic(t);
-  //  }
+    this.greyer = 255;
 
-  //  stroke(0);
-  //  if (tendrils.size() - 1 >= 0)
-  //    drawElastic((T3ndril)tendrils.lastElement());
-  //}
+    this.p5.mousePressed = () => {
+      this.drawing = true;
+      this.tendrils.push(new T3ndril(this.physics, new Vector3D(this.p5.mouseX, this.p5.mouseY, 0), this.mouse));
+    }
 
-  //void drawElastic(T3ndril t)
-  //{
-  //  float lastStretch = 1;
-  //  for (int i = 0; i < t.particles.size() - 1; ++i )
-  //  {
-  //    Vector3D firstPoint = ((Particle)t.particles.get(i)).position();
-  //    Vector3D firstAnchor = i < 1 ? firstPoint : ((Particle)t.particles.get(i - 1)).position();
-  //    Vector3D secondPoint = i + 1 < t.particles.size() ? ((Particle)t.particles.get(i + 1)).position() : firstPoint;
-  //    Vector3D secondAnchor = i + 2 < t.particles.size() ? ((Particle)t.particles.get(i + 2)).position() : secondPoint;
+    this.p5.mouseDragged = () => {
+      this.tendrils[this.tendrils.length - 1].addPoint(new Vector3D(this.p5.mouseX, this.p5.mouseY, 0));
+    }
 
-  //    //float springStretch = 2.5f/((Spring)t.springs.get( i )).stretch();
-  //    Spring s = (Spring)t.springs.get(i);
-  //    float springStretch = 2.5 * s.restLength() / s.currentLength();
+    this.p5.mouseReleased = () => {
+      this.drawing = false;
+    }
 
-  //    strokeWeight((float)((springStretch + lastStretch) / 2.0f));	// smooth out the changes in stroke width with filter
-  //    lastStretch = springStretch;
+  }
 
-  //    curve(firstAnchor.x(), firstAnchor.y(),
-  //      firstPoint.x(), firstPoint.y(),
-  //      secondPoint.x(), secondPoint.y(),
-  //      secondAnchor.x(), secondAnchor.y());
-  //  }
-  //}
+  draw() {
+    this.mouse.position.set(this.p5.mouseX, this.p5.mouseY, 0);
 
-  //void mousePressed()
-  //{
-  //  drawing = true;
-  //  tendrils.add(new T3ndril(physics, new Vector3D(mouseX, mouseY, 0), mouse));
-  //}
+    if (!this.drawing) {
+      this.physics.tick();
+      if (this.greyer < 255)
+        this.greyer *= 1.11111;
+      if (this.greyer > 255)
+        this.greyer = 255;
+    }
+    else {
+      if (this.greyer >= 64)
+        this.greyer *= 0.9;
+    }
 
-  //void mouseDragged()
-  //{
-  //  ((T3ndril)tendrils.lastElement()).addPoint(new Vector3D(mouseX, mouseY, 0));
-  //}
+    this.p5.background(255);
 
-  //void mouseReleased()
-  //{
-  //  drawing = false;
-  //}
+    this.drawOldGrey();
+  }
+
+  drawOldGrey() {
+    this.p5.stroke(255 - this.greyer);
+    for (let i: number = 0; i < this.tendrils.length - 1; ++i) {
+      var t: T3ndril = this.tendrils[i];
+      this.drawElastic(t);
+    }
+
+    this.p5.stroke(0);
+    if (this.tendrils.length - 1 >= 0)
+      this.drawElastic(this.tendrils[this.tendrils.length - 1]);
+  }
+
+  drawElastic(t: T3ndril) {
+    let lastStretch: number = 1;
+    for (let i = 0; i < t.particles.length - 1; ++i) {
+      let firstPoint: Vector3D = t.particles[i].position;
+      let firstAnchor: Vector3D = i < 1 ? firstPoint : t.particles[i - 1].position;
+      let secondPoint: Vector3D = i + 1 < t.particles.length ? t.particles[i + 1].position : firstPoint;
+      let secondAnchor: Vector3D = i + 2 < t.particles.length ? t.particles[i + 2].position : secondPoint;
+
+      //float springStretch = 2.5f/((Spring)t.springs.get( i )).stretch();
+      let s: Spring = t.springs[i];
+      let springStretch: number = 2.5 * s.getRestLength() / s.currentLength();
+
+      this.p5.strokeWeight((springStretch + lastStretch) / 2.0);	// smooth out the changes in stroke width with filter
+      lastStretch = springStretch;
+
+      this.p5.curve(firstAnchor.x, firstAnchor.y,
+        firstPoint.x, firstPoint.y,
+        secondPoint.x, secondPoint.y,
+        secondAnchor.x, secondAnchor.y);
+    }
+  }
 
   //void keyPressed()
   //{
@@ -111,29 +120,35 @@ export class Tendrils {
   //  }
   //}
 
-  //class T3ndril {
-  //  public Vector particles;
-  //  public Vector springs;
-  //	ParticleSystem physics;
-
-  //  public T3ndril(ParticleSystem p, Vector3D firstPoint, Particle followPoint) {
-  //    particles = new Vector();
-  //    springs = new Vector();
-
-  //    physics = p;
-
-  //		Particle firstParticle = p.makeParticle(1.0f, firstPoint.x(), firstPoint.y(), firstPoint.z());
-  //    particles.add(firstParticle);
-  //    physics.makeSpring(followPoint, firstParticle, 0.1f, 0.1f, 5);
-  //  }
-
-  //  public void addPoint(Vector3D p) {
-  //		Particle thisParticle = physics.makeParticle(1.0f, p.x(), p.y(), p.z());
-  //    springs.add(physics.makeSpring(((Particle)particles.lastElement()),
-  //      thisParticle,
-  //      1.0f,
-  //      1.0f,
-  //      ((Particle)particles.lastElement()).position().distanceTo(thisParticle.position()) ) );
-  //    particles.add(thisParticle);
-  //  }
 }
+
+class T3ndril {
+  public particles: Array<any>;
+  public springs: Array<any>;
+  public physics: ParticleSystem;
+
+  constructor(p: ParticleSystem, firstPoint: Vector3D, followPoint: Particle) {
+    this.particles = new Array();
+    this.springs = new Array();
+
+    this.physics = p;
+
+    let firstParticle: Particle = p.makeParticle(1.0, new Vector3D(firstPoint.x, firstPoint.y, firstPoint.z));
+    this.particles.push(firstParticle);
+    this.physics.makeSpring(followPoint, firstParticle, 0.1, 0.1, 5);
+  }
+
+  public addPoint(p: Vector3D) {
+    let thisParticle: Particle = this.physics.makeParticle(1.0, new Vector3D(p.x, p.y, p.z));
+    this.springs.push(
+      this.physics.makeSpring((this.particles[this.particles.length - 1]),
+        thisParticle,
+        1.0,
+        1.0,
+        Vector3D.distance(this.particles[this.particles.length - 1].position, thisParticle.position))
+    );
+    this.particles.push(thisParticle);
+  }
+}
+
+new Tendrils()
