@@ -2,7 +2,7 @@ import { Particle } from '../src/Particle';
 import { ParticleSystem } from '../src/ParticleSystem';
 import { Vector3D } from '../src/Vector3D';
 import { Spring } from '../src/Spring';
-//import java.util.Vector;
+import p5 from 'p5';
 
 export class Tendrils {
   public width: number = 800;
@@ -25,7 +25,6 @@ export class Tendrils {
   }
 
   setup() {
-    console.log('setup')
     this.p5.createCanvas(this.width, this.height);
     this.p5.smooth();
     this.p5.stroke(0);
@@ -111,15 +110,6 @@ export class Tendrils {
         secondAnchor.x, secondAnchor.y);
     }
   }
-
-  //void keyPressed()
-  //{
-  //  if (key == ' ') {
-  //    tendrils.clear();
-  //    physics.clear();
-  //  }
-  //}
-
 }
 
 class T3ndril {

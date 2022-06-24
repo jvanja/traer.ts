@@ -2,6 +2,7 @@ import { ParticleSystem } from '../src/ParticleSystem';
 import { Particle } from '../src/Particle';
 import { Spring } from '../src/Spring';
 import { Vector3D } from '../src/Vector3D';
+import p5 from 'p5';
 
 class Pendulum {
 
