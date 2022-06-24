@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 body {
+  font-family: 'Roboto Mono', monospace;
   margin: 0;
 }
 #defaultCanvas0 {
@@ -8,6 +11,6 @@ body {
 #infoText {
   position: absolute;
   left: 50%;
-  font-size: 30px;
+  font-size: 28px;
   transform: translateX(-50%);
 }

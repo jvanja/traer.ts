@@ -2,7 +2,6 @@ import { Particle } from '../src/Particle';
 import { ParticleSystem } from '../src/ParticleSystem';
 import { Vector3D } from '../src/Vector3D';
 import { Spring } from '../src/Spring';
-import p5 from 'p5';
 
 export class Tendrils {
   public width: number = 800;

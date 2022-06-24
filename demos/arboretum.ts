@@ -2,7 +2,6 @@ import { ParticleSystem } from '../src/ParticleSystem';
 import { Particle } from '../src/Particle';
 import { Vector3D } from '../src/Vector3D';
 import { Spring } from '../src/Spring';
-import p5 from 'p5';
 
 class Random_Arboretum {
 
