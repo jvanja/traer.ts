@@ -11,6 +11,7 @@ export default defineConfig({
         cloth: resolve(__dirname, 'demos/cloth.html'),
         pendulum: resolve(__dirname, 'demos/pendulum.html'),
         arboretum: resolve(__dirname, 'demos/arboretum.html'),
+        tendrils: resolve(__dirname, 'demos/tendrils.html'),
       }
     }
   }
