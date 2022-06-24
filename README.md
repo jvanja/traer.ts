@@ -11,13 +11,10 @@ A simple particle system physics engine for processing rewritten in TypeScript. 
 
 ## Examples
 
-[Simple Pendulum]()  
-[Bouncy Balls]()  
-[Cloth]()  
-[Cloud]()  
-[Random Arboretum]()  
-[Tendrils]()  
-[Box]()
+[Cloth](https://vanjajelic.com/test/traer/cloth.html)  
+[Random Arboretum](https://vanjajelic.com/test/traer/arboretum.html)  
+[Simple Pendulum](https://vanjajelic.com/test/traer/pendulum.html)  
+[Bouncy Balls](https://vanjajelic.com/test/traer/bouncy.html)  
 
 ---
 * Original source for processing is here: [http://murderandcreate.com/physics/](http://murderandcreate.com/physics/)
